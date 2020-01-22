@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import Todos from './Todos';
 import AddTodo from './AddTodos';
@@ -8,8 +8,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
-
-
+import Posts from './components/Posts';
 
 
 class App extends Component {
@@ -54,12 +53,12 @@ class App extends Component {
       <BrowserRouter>
         <div className="container-fluid">
           <Navbar />
-
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-
-
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/:post_id" component={Posts} />
+          </Switch>
         </div>
       </BrowserRouter>      
     );
