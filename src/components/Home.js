@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllPosts, fetchPosts } from '../actions/postActions';
+import { findDOMNode } from 'react-dom';
+import $ from 'jquery';
 
 class Home extends Component {
 
@@ -24,6 +26,11 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.getAllPosts();
+    }
+
+    handleToggleBtn = () => {
+        let el = findDOMNode(this.refs.header);
+        $(el).slideToggle();
     }
 
     render(){    
@@ -51,7 +58,8 @@ class Home extends Component {
 
         return (
             <div className="container">
-                <h4 className="text-center">Home</h4>
+                <h4 className="text-center" ref="header" >Home</h4>
+                <button className="btn btn-primary btn-sm" onClick={this.handleToggleBtn}>Toggle Button</button>
                 {this.props.loading ? (<p className="h5 text-center">Posts Loading...</p>): postList}
             </div>
         );
