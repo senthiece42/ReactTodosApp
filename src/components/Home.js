@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getAllPosts, fetchPosts } from '../actions/postActions';
 
 class Home extends Component {
 
@@ -21,10 +22,15 @@ class Home extends Component {
         });
     }**/
 
+    componentDidMount() {
+        this.props.getAllPosts();
+    }
+
+    getPosts() {
+        
+    }
+
     render(){
-
-        console.log(this.props);
-
         //let { posts } = this.state;
         let { posts } = this.props;
 
@@ -57,10 +63,16 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
     return {
         posts: state.posts.posts
     };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => {
+   return {
+       //getAllPosts: () => getAllPosts(dispatch)
+       getAllPosts: () => fetchPosts()
+   }; 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

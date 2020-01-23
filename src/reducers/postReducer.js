@@ -1,5 +1,5 @@
 const initState = {
-    posts: [
+    /**posts: [
         {
             "userId": 1,
             "id": 1,
@@ -24,18 +24,44 @@ const initState = {
             "title": "eum et est occaecati",
             "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
           }
-    ]
+    ]**/
+    loading: false,
+    posts: [],
+    error: ''
 };
 
 const postReducer = (state = initState, action) => {
-
-    if(action.type == 'DELETE_POST') {
+    switch(action.type) {
+      case 'FETCh_POST_REQUEST':
+        return {
+          ...state,
+          loading: true
+        };
+        break;
+      case 'FETCH_POST_SUCCESS':
+        return {
+          ...state,
+          loading: false,
+          posts: action.payload
+        };
+        break;
+      case 'FETCH_POST_FAILURE':
+        return {
+          ...state,
+          loading: false,
+          posts: [],
+          error: action.payload
+        };
+        break;
+      case 'DELETE_POST':
         let newPost = state.posts.filter(post => post.id != action.id);
         return {
             ...state,
             posts: newPost
         };
-    }
-    return state;
+        break;
+      default:
+        return state; 
+    }    
 };
 export default postReducer;

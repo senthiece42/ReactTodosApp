@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import postReducer from './reducers/postReducer';
 import rootReducers from './reducers';
+
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+
 /***import rootReducer from './reducers/postReducer';**/
 //import rootReducer from './reducers/index';
 
@@ -39,7 +43,30 @@ counterStore.dispatch(decrement());
 counterStore.dispatch(decrement());
 ***/
 
-const store = createStore(rootReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const myLogger = store => next => action => {
+    console.log("Logged Action: ", action);
+    let result = next(action);
+    console.log("Next State: ", store.getState());
+    return result;
+};
+
+const crashReport = store => next => action => {
+    try {
+        return next(action);
+    } catch(err) {
+        console.log("Caught an exception! ", err);
+        throw err;
+    }
+};
+
+const store = createStore(rootReducers, applyMiddleware(logger, thunk));
+/**
+store.subscribe(() => {
+    console.log("Store updated ", store.getState());
+});
+
+store.dispatch({type: "ADD", payload: 50});
+**/
 //Or 
 //const store = createStore(postReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

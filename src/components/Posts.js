@@ -54,7 +54,7 @@ class Posts extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log(state, ownProps);
+    console.log(state, ownProps);
     let id = +ownProps.match.params.post_id;
     return {
         post: state.posts.posts.find(post => post.id === id)
