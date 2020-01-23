@@ -26,11 +26,7 @@ class Home extends Component {
         this.props.getAllPosts();
     }
 
-    getPosts() {
-        
-    }
-
-    render(){
+    render(){    
         //let { posts } = this.state;
         let { posts } = this.props;
 
@@ -56,7 +52,7 @@ class Home extends Component {
         return (
             <div className="container">
                 <h4 className="text-center">Home</h4>
-                {postList}
+                {this.props.loading ? (<p className="h5 text-center">Posts Loading...</p>): postList}
             </div>
         );
     }
@@ -64,14 +60,16 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        posts: state.posts.posts
+        posts: state.posts.posts,
+        loading: state.posts.loading,
+        error: state.posts.error
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
        //getAllPosts: () => getAllPosts(dispatch)
-       getAllPosts: () => fetchPosts()
+       getAllPosts: () => dispatch(fetchPosts())
    }; 
 };
 

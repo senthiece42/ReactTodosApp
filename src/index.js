@@ -5,7 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import postReducer from './reducers/postReducer';
 import rootReducers from './reducers';
 
 import logger from 'redux-logger';

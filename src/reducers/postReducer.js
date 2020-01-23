@@ -33,10 +33,7 @@ const initState = {
 const postReducer = (state = initState, action) => {
     switch(action.type) {
       case 'FETCh_POST_REQUEST':
-        return {
-          ...state,
-          loading: true
-        };
+        return Object.assign({}, state, {loading: true});        
         break;
       case 'FETCH_POST_SUCCESS':
         return {

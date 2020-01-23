@@ -33,16 +33,17 @@ export const getAllPosts = (dispatch) => {
 }
 
 export const fetchPosts = () => {
-    return (dispatch) => {
-        return axios.get('https://jsonplaceholder.typicode.com/posts')
-        .then(res => {
-            let posts = res.data.slice(0, 10);
-            dispatch(fetchPostSuccess(posts));
-        })
-        .catch(err => {
-            dispatch(fetchPostFailure(err.message));
-        });
-    }
+    return (dispatch, getState) => {
+        dispatch(fetchPostRequest());
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res => {
+                let posts = res.data.slice(0, 10);
+                dispatch(fetchPostSuccess(posts));
+            })
+            .catch(err => {
+                dispatch(fetchPostFailure(err.message));
+            });
+    }    
 }
 
 
