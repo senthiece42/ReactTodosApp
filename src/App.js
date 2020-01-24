@@ -10,16 +10,35 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Posts from './components/Posts';
+import ThemedButton from './components/themed-btn';
+import { themes, ThemeContext } from './context/theme';
 
+function Toolbar(props) {
+  return (
+    <ThemedButton onClick={props.changeTheme}>Change Theme</ThemedButton>
+  );
+}
 
 class App extends Component {
 
-  state = {
-    todos: [
-      { id: 1, content: 'buy some milk' },
-      { id: 2, content: 'play mario kart' },
-    ]
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      theme: themes.light,
+      todos: [
+        { id: 1, content: 'buy some milk' },
+        { id: 2, content: 'play mario kart' },
+      ]
+    };
+
+    this.toggleTheme = () => {
+      this.setState(state => ({
+        theme: state.theme === themes.dark ? themes.light: themes.dark
+      }));
+    };
+  }
+  
 
   deleteTodo = (id) => {
     
@@ -54,6 +73,11 @@ class App extends Component {
       <BrowserRouter>
         <div className="container-fluid">
           <Navbar />
+
+          <ThemeContext.Provider value={this.state.theme}>
+            <Toolbar changeTheme={this.toggleTheme}/>
+          </ThemeContext.Provider>
+
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/about" component={About} />

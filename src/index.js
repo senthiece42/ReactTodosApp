@@ -10,6 +10,11 @@ import rootReducers from './reducers';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap/dist/js/bootstrap';
+
 /***import rootReducer from './reducers/postReducer';**/
 //import rootReducer from './reducers/index';
 
